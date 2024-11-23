@@ -1,0 +1,41 @@
+<header class="bg-light border-bottom py-2 px-4 d-flex justify-content-end">
+  <button 
+    class="btn btn-danger btn-sm" 
+    (click)="logout()"
+  >
+    Cerrar sesión
+  </button>
+</header>
+
+<div class="container my-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="mb-0 text-primary">Mis Préstamos</h3>
+      </div>
+      <div class="card-body">
+        <!-- Tabla de préstamos -->
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Nombre del Libro</th>
+              <th>Autor</th>
+              <th>Fecha de Préstamo</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            @for (item of loans; track $index) {
+              <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ item.book.title }}</td>
+                <td>{{ item.book.author }}</td>
+                <td>{{item.returnDate[2]}}/{{item.returnDate[1]}}/{{item.returnDate[0]}}</td>
+              </tr>
+            }
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

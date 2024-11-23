@@ -1,0 +1,230 @@
+
+<header class="bg-light border-bottom py-2 px-4 d-flex justify-content-end">
+  <button 
+    class="btn btn-danger btn-sm" 
+    (click)="logout()"
+  >
+    Cerrar sesión
+  </button>
+</header>
+<div class="container my-4">
+    <!-- Sección de Libros -->
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="mb-0 text-primary">Libros</h3>
+        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addBookModal">Agregar Libro</button>
+      </div>
+      <div class="card-body">
+        <!-- Lista de libros -->
+        <ul class="list-group">
+
+          @for (item of books; track $index) {
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Titulo: {{item.title}}</span>
+            <span>Autor: {{item.author}}</span>
+            <span>Unidades disponibles: {{item.availableQuantity}}</span>
+              
+            <div>
+              <button class="btn btn-primary btn-sm me-2">Editar</button>
+              <button class="btn btn-danger btn-sm">Eliminar</button>
+            </div>
+          </li>
+            
+          }
+        </ul>
+      </div>
+    </div>
+  
+    <!-- Sección de Préstamos -->
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="mb-0 text-primary">Préstamos</h3>
+        <div>
+          <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addLoanModal">Agregar prestamo</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="text-muted">Administre los préstamos activos aquí.</p>
+      </div>
+
+      <div class="card-body">
+        <ul class="list-group">
+
+          @for (item of loans; track $index) {
+
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Libro: {{item.book.title}}</span>
+            <span>Estudiante: {{item.student.name}}</span>
+            <span>Devolución: {{item.returnDate[2]}}/{{item.returnDate[1]}}/{{item.returnDate[0]}}</span>
+              
+            <div>
+              <button class="btn btn-danger btn-sm" (click)="returnLoan(item.id)">Devolver</button>
+            </div>
+          </li>
+            
+          }
+        </ul>
+      </div>
+
+    </div>
+    
+  </div>
+
+  <div
+  class="modal fade"
+  id="addBookModal"
+  tabindex="-1"
+  aria-labelledby="addBookModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addBookModalLabel">Agregar Libro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="bookForm" (ngSubmit)="addBook()">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="title" class="form-label">Título</label>
+            <input
+              type="text"
+              id="title"
+              class="form-control"
+              formControlName="title"
+              placeholder="Ingrese el título del libro"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Autor</label>
+            <input
+              type="text"
+              id="author"
+              class="form-control"
+              formControlName="author"
+              placeholder="Ingrese el autor del libro"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="totalQuantity" class="form-label">Cantidad Total</label>
+            <input
+              type="number"
+              id="totalQuantity"
+              class="form-control"
+              formControlName="totalQuantity"
+              placeholder="Ingrese la cantidad total"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="bookForm.invalid">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+class="toast position-fixed bottom-0 end-0 p-3"
+role="alert"
+aria-live="assertive"
+aria-atomic="true"
+[class.show]="isToastVisible"
+>
+<div class="toast-header">
+  <strong class="me-auto">Notificación</strong>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="toast"
+    aria-label="Close"
+    (click)="hideToast()"
+  ></button>
+</div>
+<div class="toast-body">
+  {{ toastMessage }}
+</div>
+</div>
+
+<div
+class="modal fade"
+id="addLoanModal"
+tabindex="-1"
+aria-labelledby="addLoanModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title text-primary" id="addLoanModalLabel">Registrar Préstamo</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="loanForm">
+        <!-- Select para libro -->
+        <div class="form-group mb-3">
+          <label for="book" class="form-label">Libro</label>
+          <select
+            id="book"
+            class="form-select"
+            formControlName="bookId"
+            required
+          >
+            <option *ngFor="let book of books" [value]="book.id">
+              {{ book.title }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Select para estudiante -->
+        <div class="form-group mb-3">
+          <label for="student" class="form-label">Estudiante</label>
+          <select
+            id="student"
+            class="form-select"
+            formControlName="studentId"
+            required
+          >
+            <option *ngFor="let student of students" [value]="student.id">
+              {{ student.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group mb-3">
+          <label for="returnDate" class="form-label">Fecha de devolución</label>
+          <input
+            type="date"
+            id="returnDate"
+            class="form-control"
+            formControlName="returnDate"
+            required
+          />
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="confirmLoan()"
+      >
+        Confirmar Préstamo
+      </button>
+    </div>
+  </div>
+</div>
+</div>
