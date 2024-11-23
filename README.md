@@ -1,28 +1,50 @@
-# LibrarySystem
+# LibrarySystem 🌟  
+**LibrarySystem** es la interfaz de usuario del sistema de gestión de biblioteca, diseñado para complementar el backend del proyecto desarrollado como parte de una prueba técnica para **RocketCode**. Este frontend fue creado con **Angular 17** para ofrecer una experiencia intuitiva y eficiente tanto para administradores como para estudiantes.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
+---
 
-## Development server
+## Funcionalidades 🛠️  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Administrador  
+- **Gestión de libros**: Interfaz para registrar, editar y eliminar libros en el catálogo.  
+- **Gestión de préstamos**: Permite registrar y visualizar préstamos de libros.  
 
-## Code scaffolding
+### Alumno  
+- **Consulta de préstamos**: Visualiza los libros actualmente en préstamo junto con su fecha de vencimiento.  
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## Tecnologías Utilizadas 🚀  
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Framework**: Angular 17  
+- **Estilo**: Bootstrap
+- **Consumo de API**: Integración con el backend en Spring Boot a través de HTTP.  
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Requisitos Previos ✅  
 
-## Running end-to-end tests
+Antes de ejecutar el proyecto, asegúrate de tener:  
+- **Node.js** (v18 o superior recomendado)  
+- **Angular CLI** (v17)  
+- **Backend del proyecto en ejecución**  
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+---
 
-## Further help
+## Instalación y Configuración 🖥️  
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-# RocketCode_PruebaTecnica_Front
+1. **Clonar el repositorio**  
+   ```bash
+   git clone https://github.com/tu-usuario/LibrarySystem.git
+   cd LibrarySystem
+   
+2. **Instalar dependencias**  
+   ```bash
+   npm install
+
+3. **Ejecutar proyecto**  
+   ```bash
+   ng serve
+
+
+   
